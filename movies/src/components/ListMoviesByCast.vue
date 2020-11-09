@@ -1,6 +1,6 @@
 <template>
   <div id="cast-list">
-    <div v-for="(actorName, titlesList, index) in Object.entries(filteredMoviesByCast)" :key="index">
+    <div v-for="[actorName, titlesList, index] in Object.entries(filteredMoviesByCast)" :key="index">
       <p> {{ actorName }} </p>
       <ol>
         <li v-for="(title, index) in titlesList" :key="index"> {{ title }} </li>
@@ -15,15 +15,16 @@ import filter from 'lodash/fp/filter'
 import transform from 'lodash/fp/transform'
 
 export default {
-  name: 'MoviesListByCast',
+  name: 'ListMoviesByCast',
   props: {
     movies: Array
   },
   computed: {
     filteredMoviesByCast() {
-      const moviesListSlice = this.movies.slice(0, 100);
+      const rangeBegin = Math.floor(Math.random() * (this.movies.length - 100));
+      const moviesListSlice = this.movies.slice(rangeBegin, rangeBegin + 100);
 
-      let castData = flow(
+      return flow(
         filter(movie => movie.cast.length),
         transform((accumulative, movie) => {
           movie.cast.forEach(actorName => {
@@ -34,14 +35,9 @@ export default {
             accumulative[actorName].push(movie.title);
         })}, {})
       )(moviesListSlice);
-
-    console.log(castData);
-
-    return castData;
   }
  }   
 }
 </script>
-
 <style scoped>
 </style>

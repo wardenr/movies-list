@@ -13,12 +13,12 @@
           <tr v-for="(movie, index) in currentEntries" :key="index">
             <td>{{movie.title}}</td>
             <td>{{movie.year}}</td>
-            <td>{{movie.cast}}</td>
-            <td>{{movie.genres}}</td>
+            <td>{{movie.cast.join()}}</td>
+            <td>{{movie.genres.join()}}</td>
           </tr>
         </tbody>
       </table>
-      <input type="button" value="Show more entries" v-on:click="appendMoviesTableEntriesAmount">
+      <input type="button" value="Show more entries" v-on:click="appendMoviesTableEntriesAmount" class="btn btn-primary" v-if="currentRowsAmount < movies.length">
   </div>
 </template>
 
@@ -39,14 +39,11 @@ export default {
   methods: {
     appendMoviesTableEntriesAmount() {
       const totalEntriesAmount = this.movies.length;
+
       this.currentRowsAmount += 10;
 
       if (this.currentRowsAmount > totalEntriesAmount) {
         this.currentRowsAmount = totalEntriesAmount;
-      }
-
-      if (this.currentRowsAmount == totalEntriesAmount) {
-        return;
       }
 
       this.currentEntries = this.movies.slice(0, this.currentRowsAmount);

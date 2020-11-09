@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="search-bar">
     <form>
       <div class="form-group">
           <label for=inputTitle>Tytuł</label>

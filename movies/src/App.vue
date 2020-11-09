@@ -1,16 +1,21 @@
 <template>
-  <div id="app">
-    <MoviesListByCast :movies="moviesList"/>
+  <div id="app" class="container">
+    <h1>Baza filmów</h1>
+    <SearchBar />
+    <MoviesTable :movies="moviesList"/>
+    <h1>Filmy wg obsady</h1>
+    <ListMoviesByCast :movies="moviesList" />
+    <h1>Filmy wg gatunku</h1>
+    <ListMoviesByGenre :movies="moviesList"/>
   </div>
 </template>
 
 <script>
-    //<MoviesTable :movies="moviesList"/>
 import json from './assets/movies.json'
-//import SearchBar from './components/SearchBar.vue'
-//import MoviesTable from './components/MoviesTable.vue'
-import MoviesListByCast from './components/MoviesListByCast.vue'
-//import MoviesListByGenre from './components/MoviesListByGenre.vue'
+import SearchBar from './components/SearchBar.vue'
+import MoviesTable from './components/MoviesTable.vue'
+import ListMoviesByCast from './components/ListMoviesByCast.vue'
+import ListMoviesByGenre from './components/ListMoviesByGenre.vue'
 
 export default {
   name: 'App',
@@ -18,10 +23,10 @@ export default {
     moviesList: json.valueOf()
   }),
   components: {
- //   SearchBar
-//    MoviesTable,
-    MoviesListByCast,
- //   MoviesListByGenre
+    SearchBar,
+    MoviesTable,
+    ListMoviesByCast,
+    ListMoviesByGenre
   },
 }
 </script>
