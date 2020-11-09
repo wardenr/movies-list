@@ -19,8 +19,8 @@ export default {
   }),
   components: {
  //   SearchBar
-    MoviesTable,
-//    MoviesListByCast,
+//    MoviesTable,
+    MoviesListByCast,
  //   MoviesListByGenre
   },
 }
