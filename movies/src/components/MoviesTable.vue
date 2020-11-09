@@ -18,27 +18,34 @@
           </tr>
         </tbody>
       </table>
-      <input type="button" value="Show more entries" v-on:click="appendMoviesTableEntriesAmount" class="btn btn-primary" v-if="currentRowsAmount < movies.length">
+      <input type="button" value="Show more entries" v-on:click="appendMoviesTableEntriesAmount" class="btn btn-primary" v-if="currentRowsAmount < currentMoviesList.length">
   </div>
 </template>
 
 <script>
+import _ from 'lodash';
+
 export default {
   name: 'MoviesTable',
   props: {
-    movies: Array
+    movies: Array,
+    searchCriteria: Object
   },
   data: () => ({
     currentRowsAmount: 10,
+    currentMoviesList: []
   }),
+  created() {
+    this.currentMoviesList = this.movies;
+  },
   computed: {
     currentEntries() {
-      return this.movies.slice(0, this.currentRowsAmount);
+      return this.currentMoviesList.slice(0, this.currentRowsAmount);
     }
   },
   methods: {
     appendMoviesTableEntriesAmount() {
-      const totalEntriesAmount = this.movies.length;
+      const totalEntriesAmount = this.currentMoviesList.length;
 
       this.currentRowsAmount += 10;
 
@@ -46,9 +53,21 @@ export default {
         this.currentRowsAmount = totalEntriesAmount;
       }
 
-      this.currentEntries = this.movies.slice(0, this.currentRowsAmount);
+      this.currentEntries = this.currentMoviesList.slice(0, this.currentRowsAmount);
     }
-  }
+  },
+  watch: {
+    searchCriteria() {
+      this.currentMoviesList = _.filter(this.movies, movie => {
+        return movie.title.includes(this.searchCriteria.title) &&
+               (movie.year >= this.searchCriteria.productionFrom) &&
+               (movie.year <= this.searchCriteria.productionTo) &&
+               (!this.searchCriteria.cast || movie.cast.includes(this.searchCriteria.cast));
+      });
+
+      this.currentRowsAmount = 10;
+    }
+  },
 }
 </script>
 

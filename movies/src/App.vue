@@ -1,8 +1,8 @@
 <template>
   <div id="app" class="container">
     <h1>Baza filmów</h1>
-    <SearchBar />
-    <MoviesTable :movies="moviesList"/>
+    <SearchBar @updateSearchCriteriaEvent="updateSearchCriteria" />
+    <MoviesTable :movies="moviesList" :searchCriteria="searchCriteria" />
     <h1>Filmy wg obsady</h1>
     <ListMoviesByCast :movies="moviesList" />
     <h1>Filmy wg gatunku</h1>
@@ -20,13 +20,19 @@ import ListMoviesByGenre from './components/ListMoviesByGenre.vue'
 export default {
   name: 'App',
   data: () => ({
-    moviesList: json.valueOf()
+    moviesList: json.valueOf(),
+    searchCriteria: {}
   }),
   components: {
     SearchBar,
     MoviesTable,
     ListMoviesByCast,
     ListMoviesByGenre
+  },
+  methods: {
+   updateSearchCriteria(newSearchCriteria) {
+     this.searchCriteria = newSearchCriteria;
+   }
   },
 }
 </script>
