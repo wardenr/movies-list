@@ -33,25 +33,18 @@ export default {
   name: 'SearchBar',
   data: () =>  ({
     title: "",
-    productionFrom: 0,
-    productionTo: 0,
+    productionFrom: 1900,
+    productionTo: 2019,
     cast: ""
   }),
   methods: {
-    clearInput() {
-      this.title = "";
-      this.productionFrom = 0;
-      this.productionTo = 0;
-      this.cast = "";
-    },
     fetchSearchCriteria() {
       this.$emit('updateSearchCriteriaEvent', {
-        title: this.title ? this.title : "",
-        productionFrom: this.productionFrom ? this.productionFrom : 0,
-        productionTo: this.productionTo ? this.productionTo : 9999,
-        cast: this.cast ? this.cast : ""
+        title: this.title,
+        productionFrom: this.productionFrom, 
+        productionTo: this.productionTo,
+        cast: this.cast
       });
-      //this.clearInput();
     }
   }
 }
